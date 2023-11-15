@@ -13,9 +13,10 @@ run :
 
 stop :
 	@$(SUDO) docker stop nginx
+	@$(SUDO) docker stop portainer
 
 fclean :
-	@$(SUDO) docker container prune -f
-	@$(SUDO) docker image prune -a -f
+	@cd $(SRCS) && $(SUDO) docker compose down -v
+	@$(SUDO) docker system prune -f
 
 .PHONY : build run fclean

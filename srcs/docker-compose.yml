@@ -1,0 +1,36 @@
+#docker-compose version
+version: '3'
+
+#list of containers
+services:
+  nginx:
+    container_name: nginx
+    networks:
+      - inception
+    build:
+      context: ./requirements/nginx
+      dockerfile: ./Dockerfile
+    image: nginx
+    ports:
+      - 443:443
+
+  portainer:
+    container_name: portainer
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/portainer
+      dockerfile: ./Dockerfile
+    image: portainer
+    ports:
+      - 8000:9000
+    volumes:
+      - portainer_volume:/data/volume
+
+volumes:
+  portainer_volume:
+
+#network configuration
+networks:
+  inception:
+    driver: bridge

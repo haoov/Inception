@@ -12,11 +12,11 @@ run :
 	@cd $(SRCS) && $(SUDO) docker compose up -d
 
 stop :
-	@$(SUDO) docker stop nginx
-	@$(SUDO) docker stop portainer
+	@cd $(SRCS) && $(SUDO) docker compose stop
 
 fclean :
 	@cd $(SRCS) && $(SUDO) docker compose down -v
 	@$(SUDO) docker system prune -f
+	@rm -rf ~/data/mysql/* ~/data/portainer/* ~/data/wordpress/*
 
 .PHONY : build run fclean

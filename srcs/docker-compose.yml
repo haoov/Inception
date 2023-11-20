@@ -3,6 +3,10 @@ version: '3'
 
 #list of containers
 services:
+
+  #------------------------------------#
+  #               NGINX                #
+  #------------------------------------#
   nginx:
     container_name: nginx
     networks:
@@ -13,7 +17,52 @@ services:
     image: nginx
     ports:
       - 443:443
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
 
+  #------------------------------------#
+  #              MARIADB               #
+  #------------------------------------#
+  mariadb:
+    container_name: mariadb
+    networks:
+      - inception
+    build:
+      context: ./requirements/mariadb
+      dockerfile: ./Dockerfile
+    image: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    env_file:
+      - .env
+
+  #------------------------------------#
+  #              WORDPRESS             #
+  #------------------------------------#
+  wordpress:
+    container_name: wordpress
+    networks:
+      - inception
+    build:
+      context: ./requirements/wordpress
+      dockerfile: ./Dockerfile
+    image: wordpress
+    ports:
+      - 9000:9000
+    volumes:
+      - wordpress_data:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+
+  #------------------------------------#
+  #              PORTAINER             #
+  #------------------------------------#
   portainer:
     container_name: portainer
     networks:
@@ -32,8 +81,29 @@ services:
     env_file:
       - .env
 
+#volumes
 volumes:
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/rsabbah/data/mysql
+      o: bind
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/rsabbah/data/wordpress
+      o: bind
+      
   portainer_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/rsabbah/data/portainer
+      o: bind
 
 #network configuration
 networks:

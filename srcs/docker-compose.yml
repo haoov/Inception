@@ -124,15 +124,15 @@ services:
     build:
       context: ./requirements/bonus/ftp
       dockerfile: Dockerfile
-      args:
-        FTP_USER: ${FTP_USER}
-        FTP_PASSWORD: ${FTP_PASSWORD}
     image: ftp
     ports:
       - 21:21
       - 20:20
+      - "40000-40005:40000-40005"
     volumes:
       - wordpress_data:/var/www/html
+    env_file:
+      - .env
 
 #volumes
 volumes:

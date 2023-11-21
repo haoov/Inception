@@ -1,17 +1,17 @@
 FROM debian:bullseye
 
-ARG FTP_USER
-ARG FTP_PASSWORD
-
 RUN	apt-get update -y; \
 	apt-get upgrade -y; \
-	apt-get install -y vsftpd
-	# adduser ${FTP_USER}; \
-	# echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswdv; \
-	# chown -R ${FTP_USER}:${FTP_USER} /var/www/html; \
-	# echo ${FTP_USER} | tee -a /etc/vsftpd.userlist
+	apt-get install -y vsftpd; \
+	adduser ftpuser --disabled-password; \
+	mkdir -p /var/www/html; \
+	chown -R ftpuser /var/www/html; \
+	mkdir -p /var/run/vsftpd /var/run/vsftpd/empty
 
-COPY conf/vsftpd.conf /etc/vsftpd.conf
+COPY tools/entrypoint.sh /entrypoint.sh
 
-CMD tail -f > /dev/null
-#CMD ["vsftpd", "/etc/vsftpd.cond"]
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+CMD ["vsftpd", "/etc/vsftpd.conf"]

@@ -27,6 +27,4 @@ RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-#CMD tail -f > /dev/null
-
 CMD ["mysqld", "--bind-address=0.0.0.0"]

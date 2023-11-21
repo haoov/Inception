@@ -81,6 +81,59 @@ services:
     env_file:
       - .env
 
+  #------------------------------------#
+  #               ADMINER              #
+  #------------------------------------#
+  adminer:
+    container_name: adminer
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    image: adminer
+    expose:
+      - 9000
+    depends_on:
+      - mariadb
+
+  #------------------------------------#
+  #               REDIS                #
+  #------------------------------------#
+  redis:
+    container_name: redis
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
+
+  ftp:
+    container_name: ftp
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+      args:
+        FTP_USER: ${FTP_USER}
+        FTP_PASSWORD: ${FTP_PASSWORD}
+    image: ftp
+    ports:
+      - 21:21
+      - 20:20
+    volumes:
+      - wordpress_data:/var/www/html
+
 #volumes
 volumes:
 

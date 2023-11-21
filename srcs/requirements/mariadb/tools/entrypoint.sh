@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -ex
+
 #install mariadb table
 mysql_install_db
 
@@ -24,7 +25,7 @@ $mysql <<- EOSQL
 EOSQL
 
 #add flags to the command
-mysql=""${mysql}" -p"${MARIADB_ROOT_PASSWORD}" "${MARIADB_DATABASE}""
+mysql="${mysql} -p${MARIADB_ROOT_PASSWORD} ${MARIADB_DATABASE}"
 #add wordpress database already preconfigured
 ${mysql} < wordpress.sql
 

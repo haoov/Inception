@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN	set -ex; \
-	apt-get update -y && apt-get upgrade -y; \
+	apt-get update -y; \
 	apt-get install -y wget; \
 	apt-get install -y wordpress php-fpm; \
 	apt-get install -y less; \

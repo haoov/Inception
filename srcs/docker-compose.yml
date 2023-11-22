@@ -141,21 +141,21 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/rsabbah/data/mysql
+      device: /home/rsabbah/data/mariadb
       o: bind
 
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /Users/rsabbah/data/wordpress
+      device: /home/rsabbah/data/wordpress
       o: bind
       
   portainer_data:
     driver: local
     driver_opts:
       type: none
-      device: /Users/rsabbah/data/portainer
+      device: /home/rsabbah/data/portainer
       o: bind
 
 #network configuration

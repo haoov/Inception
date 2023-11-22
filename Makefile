@@ -17,6 +17,6 @@ stop :
 fclean :
 	@cd $(SRCS) && $(SUDO) docker compose down -v
 	@$(SUDO) docker system prune -f
-	@rm -rf ~/data/mysql/* ~/data/portainer/* ~/data/wordpress/*
+	@$(SUDO) rm -rf ~/data/mysql/* ~/data/portainer/* ~/data/wordpress/*
 
 .PHONY : build run fclean

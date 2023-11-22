@@ -1,7 +1,6 @@
 FROM debian:bullseye
 
 RUN	apt-get update -y; \
-	apt-get upgrade -y; \
 	apt-get install -y vsftpd; \
 	adduser ftpuser --disabled-password; \
 	mkdir -p /var/www/html; \

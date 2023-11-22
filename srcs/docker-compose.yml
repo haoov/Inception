@@ -128,11 +128,12 @@ services:
     ports:
       - 21:21
       - 20:20
-      - "40000-40005:40000-40005"
+      - "10000-10010:10000-10010"
     volumes:
-      - wordpress_data:/var/www/html
+      - wordpress_data:/home/ftpuser/ftp/files
     env_file:
       - .env
+    restart: always
 
 #volumes
 volumes:

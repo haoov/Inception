@@ -4,6 +4,7 @@ FROM debian:bullseye
 RUN	set -ex; \
 	#update package and install utilitys
 	apt-get update -y; \
+	apt-get upgrade -y; \
 	apt-get install nginx -y openssl; \
 	#generate key and certificate
 	mkdir -p /etc/nginx/ssl; \

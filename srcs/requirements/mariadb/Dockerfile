@@ -6,6 +6,7 @@ RUN	set -ex; \
 	groupadd -r mysqlgp && useradd -r -g mysqlgp mysqlusr; \
 	#update and upgrade package list
 	apt-get -y update; \
+	apt-get upgrade -y; \
 	#insatall mariadb server package
 	apt-get install -y mariadb-server; \
 	#purge and recreate datadir with appropriate ownership to get rid of default

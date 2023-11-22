@@ -1,10 +1,11 @@
 FROM debian:bullseye
 
 RUN	apt-get update -y; \
+	apt-get upgrade -y; \
 	apt-get install -y vsftpd; \
 	adduser ftpuser --disabled-password; \
-	mkdir -p /var/www/html; \
-	chown -R ftpuser /var/www/html; \
+	mkdir /home/ftpuser/ftp; \
+	mkdir /home/ftpuser/ftp/files; \
 	mkdir -p /var/run/vsftpd /var/run/vsftpd/empty
 
 COPY tools/entrypoint.sh /entrypoint.sh

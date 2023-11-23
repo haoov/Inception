@@ -117,6 +117,9 @@ services:
     env_file:
       - .env
 
+  #------------------------------------#
+  #                 FTP                #
+  #------------------------------------#
   ftp:
     container_name: ftp
     networks:
@@ -133,6 +136,21 @@ services:
       - wordpress_data:/home/ftpuser/ftp/files
     env_file:
       - .env
+    restart: always
+
+  #------------------------------------#
+  #           STATIC WEBSITE           #
+  #------------------------------------#
+  static_website:
+    container_name: static_website
+    networks:
+      - inception
+    build:
+      context: ./requirements/bonus/static_website
+      dockerfile: Dockerfile
+    image: static_website
+    ports:
+      - 8080:8080
     restart: always
 
 #volumes

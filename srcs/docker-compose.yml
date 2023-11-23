@@ -39,6 +39,10 @@ services:
       - mariadb_data:/var/lib/mysql
     env_file:
       - .env
+    healthcheck:
+      test: "mariadb-admin ping -p${MARIADB_ROOT_PASSWORD}"
+      retries: 10
+      interval: 2s
 
   #------------------------------------#
   #              WORDPRESS             #
@@ -58,7 +62,9 @@ services:
     env_file:
       - .env
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
+    restart: always
 
   #------------------------------------#
   #              PORTAINER             #
@@ -95,7 +101,7 @@ services:
     expose:
       - 9000
     depends_on:
-      - mariadb
+      - wordpress
 
   #------------------------------------#
   #               REDIS                #
